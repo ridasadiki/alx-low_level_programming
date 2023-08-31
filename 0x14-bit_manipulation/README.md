@@ -1,18 +1,18 @@
 C - Bit manipulation
 
-task 1
+#task 1
 - Write a function that converts a binary number to an unsigned int.
-task 2
+#task 2
 - Write a function that prints the binary representation of a number.
-task 3
+#task 3
 - Write a function that returns the value of a bit at a given index.
-task 4
+#task 4
 - Write a function that sets the value of a bit to 1 at a given index.
-task 5
+#task 5
 - Write a function that sets the value of a bit to 0 at a given index.
-task 6
+#task 6
 - Write a function that returns the number of bits you would need to flip to get from one number to another.
-task 7
+#task 7
 - Write a function that checks the endianness.
-task 8
+#task 8
 - Find the password for this program.
