@@ -1,66 +1,32 @@
 #include "hash_tables.h"
 
 /**
- * free_node - Free a node.
- * @node: Node to free.
+ * hash_table_create - Creates a hash table.
+ * @size: the size, in number of nodes, to make the new hash table.
  *
- * Return: Void.
+ * Return: a pointer to the newly created hash table.
  */
-void free_node(hash_node_t *node)
+hash_table_t *hash_table_create(unsigned long int size)
 {
-	free(node->key);
-	free(node->value);
-	free(node);
-}
+	unsigned int i = 0;
+	hash_table_t *ht = malloc(sizeof(hash_table_t));
 
-/**
- * hash_table_set - Set a value in the hash table.
- * @ht: Hash table.
- * @key: Key to be indexed.
- * @value: Value to set in the hash table.
- *
- * Return: 1 if works, 0 if doesn't.
- */
-int hash_table_set(hash_table_t *ht, const char *key, const char *value)
-{
-	unsigned long int index;
-	hash_node_t *new_node, *current;
-
-	if (strcmp(key, "") == 0 || key == NULL || ht == NULL)
-		return (0);
-	index = key_index((const unsigned char *)key, ht->size);
-	new_node = malloc(sizeof(hash_node_t));
-	if (new_node == NULL)
-		return (0);
-	new_node->key = strdup((char *)key);
-	new_node->value = strdup((char *)value);
-	new_node->next = NULL;
-	if (ht->array[index] == NULL)
-		ht->array[index] = new_node;
-	else
+	if (ht == NULL)
 	{
-		current = ht->array[index];
-		if (strcmp(current->key, key) == 0)
-		{
-			new_node->next = current->next;
-			ht->array[index] = new_node;
-			free_node(current);
-			return (1);
-		}
-		while (current->next != NULL && strcmp(current->next->key, key) != 0)
-		{ current = current->next;
-		}
-		if (strcmp(current->key, key) == 0)
-		{
-			new_node->next = current->next->next;
-			free_node(current->next);
-			current->next = new_node;
-		}
-		else
-		{
-			new_node->next = ht->array[index];
-			ht->array[index] = new_node;
-		}
+		fprintf(stderr, "Error: malloc failed\n");
+		return (NULL);
 	}
-	return (1);
+
+	ht->size = size;
+	ht->array = malloc(sizeof(hash_node_t *) * size);
+	if (ht->array == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		return (NULL);
+	}
+
+	for (; i < size; i++)
+		ht->array[i] = NULL;
+
+	return (ht);
 }
